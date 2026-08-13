@@ -38,7 +38,7 @@ export const commissionFaqs: FaqItem[] = [
     id: "payment",
     question: "How do clients pay me?",
     answer:
-      "Payment terms are set during scoping. Typical structure is a deposit to reserve the schedule and a balance on final delivery. I invoice clearly and can work with standard methods once the agreement is in place. Digital products are purchased separately on itch.io.",
+      "Payment terms are set during scoping. Typical structure is a deposit to reserve the schedule and a balance on final delivery. I invoice clearly and can work with standard methods once the agreement is in place. Free downloads on itch.io are separate from commission work.",
   },
   {
     id: "timeline",
@@ -56,7 +56,7 @@ export const commissionFaqs: FaqItem[] = [
     id: "ownership",
     question: "Who owns the work?",
     answer:
-      "Ownership and license terms are written into the agreement before work begins. Product purchases on itch.io follow each product’s license notes.",
+      "Ownership and license terms are written into the agreement before work begins. Free itch.io releases follow the license notes on each itch.io page.",
   },
   {
     id: "fit",

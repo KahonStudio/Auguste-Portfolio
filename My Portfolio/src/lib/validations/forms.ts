@@ -1,11 +1,15 @@
 import { z } from "zod";
 
+/** Honeypot — must stay empty for real users. */
+const honeypotField = z.string();
+
 export const contactSchema = z.object({
   name: z.string().min(2, "Please enter your name."),
   email: z.string().email("Please enter a valid email."),
   subject: z.string().min(3, "Please add a subject."),
   message: z.string().min(20, "Please include a bit more detail."),
   type: z.literal("contact"),
+  website: honeypotField,
 });
 
 export const commissionSchema = z.object({
@@ -21,6 +25,7 @@ export const commissionSchema = z.object({
   deadline: z.string().optional(),
   brief: z.string().min(40, "Please describe the project in more detail."),
   type: z.literal("commission"),
+  website: honeypotField,
 });
 
 export type ContactInput = z.infer<typeof contactSchema>;

@@ -29,7 +29,7 @@ export function SiteFooter({
             {screenName}
           </p>
           <p className="max-w-sm text-sm leading-relaxed text-foreground-muted">
-            Games and software with original craft. Products on itch.io as{" "}
+            Games and software with original craft. Free releases on itch.io as{" "}
             {screenName}. Commissions by inquiry.
           </p>
           <a

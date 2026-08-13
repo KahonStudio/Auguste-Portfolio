@@ -25,7 +25,7 @@ export function CommissionForm() {
     formState: { errors },
   } = useForm<CommissionInput>({
     resolver: zodResolver(commissionSchema),
-    defaultValues: { type: "commission" },
+    defaultValues: { type: "commission", website: "" },
   });
 
   async function onSubmit(data: CommissionInput) {
@@ -44,7 +44,7 @@ export function CommissionForm() {
         throw new Error(body?.error ?? "Something went wrong.");
       }
       setStatus("success");
-      reset({ type: "commission" });
+      reset({ type: "commission", website: "" });
     } catch (err) {
       setStatus("error");
       setErrorMessage(
@@ -78,7 +78,26 @@ export function CommissionForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" noValidate>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="relative space-y-6"
+      noValidate
+    >
+      {/* Honeypot — leave empty; hidden from people, not from basic bots */}
+      <div
+        className="absolute -left-[9999px] h-0 w-0 overflow-hidden"
+        aria-hidden="true"
+      >
+        <label htmlFor="commission-website">Website</label>
+        <input
+          id="commission-website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          {...register("website")}
+        />
+      </div>
+
       <div className="grid gap-6 sm:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="commission-name">Name</Label>

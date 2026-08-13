@@ -2,12 +2,39 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { FadeIn } from "@/components/motion/fade-in";
 
+type CtaLink = { label: string; href: string };
+
 type CtaBandProps = {
   title: string;
   description: string;
-  primary: { label: string; href: string };
-  secondary?: { label: string; href: string };
+  primary: CtaLink;
+  secondary?: CtaLink;
 };
+
+function isExternal(href: string) {
+  return href.startsWith("http://") || href.startsWith("https://");
+}
+
+function CtaButton({
+  link,
+  variant = "default",
+}: {
+  link: CtaLink;
+  variant?: "default" | "secondary";
+}) {
+  const external = isExternal(link.href);
+  return (
+    <Button asChild size="lg" variant={variant === "secondary" ? "secondary" : "default"}>
+      {external ? (
+        <a href={link.href} target="_blank" rel="noopener noreferrer">
+          {link.label}
+        </a>
+      ) : (
+        <Link href={link.href}>{link.label}</Link>
+      )}
+    </Button>
+  );
+}
 
 export function CtaBand({ title, description, primary, secondary }: CtaBandProps) {
   return (
@@ -21,14 +48,8 @@ export function CtaBand({ title, description, primary, secondary }: CtaBandProps
             {description}
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
-            <Button asChild size="lg">
-              <Link href={primary.href}>{primary.label}</Link>
-            </Button>
-            {secondary ? (
-              <Button asChild variant="secondary" size="lg">
-                <Link href={secondary.href}>{secondary.label}</Link>
-              </Button>
-            ) : null}
+            <CtaButton link={primary} />
+            {secondary ? <CtaButton link={secondary} variant="secondary" /> : null}
           </div>
         </div>
       </FadeIn>

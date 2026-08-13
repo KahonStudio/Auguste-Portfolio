@@ -1,90 +1,106 @@
 /**
  * Content accessors.
- * CMS-ready: swap these implementations to fetch from a headless CMS later
- * without changing page components. Keys are stable string IDs for future i18n.
+ * Prefer DB when DATABASE_URL is set and rows exist; otherwise fall back to
+ * static src/content/* so the public site keeps working without CMS setup.
  */
+import { cache } from "react";
 import { experience } from "@/content/experience";
 import { legalPages } from "@/content/legal";
 import { commissionFaqs, commissionProcess, workingWithMe } from "@/content/process";
-import { products } from "@/content/products";
-import { projects } from "@/content/projects";
-import { services } from "@/content/services";
-import { site } from "@/content/site";
+import { projects as staticProjects } from "@/content/projects";
+import { services as staticServices } from "@/content/services";
+import { site as staticSite } from "@/content/site";
+import { isDatabaseConfigured, prisma } from "@/lib/prisma";
+import { mapProject, mapService, parseSiteData } from "@/lib/content/mappers";
 import type {
   ExperienceItem,
   FaqItem,
   LegalPage,
   ProcessStep,
-  Product,
   Project,
   Service,
   SiteContent,
 } from "@/types";
 
-export function getSite(): SiteContent {
-  return site;
+export const getSite = cache(async (): Promise<SiteContent> => {
+  if (!isDatabaseConfigured()) return staticSite;
+  try {
+    const row = await prisma.siteSettings.findUnique({ where: { id: "default" } });
+    if (!row) return staticSite;
+    return parseSiteData(row.data);
+  } catch {
+    return staticSite;
+  }
+});
+
+export const getProjects = cache(async (): Promise<Project[]> => {
+  if (!isDatabaseConfigured()) return staticProjects;
+  try {
+    const rows = await prisma.project.findMany({ orderBy: { sortOrder: "asc" } });
+    if (rows.length === 0) return staticProjects;
+    return rows.map(mapProject);
+  } catch {
+    return staticProjects;
+  }
+});
+
+export async function getFeaturedProjects(): Promise<Project[]> {
+  const all = await getProjects();
+  return all.filter((p) => p.featured);
 }
 
-export function getProducts(): Product[] {
-  return products;
+export async function getProjectBySlug(slug: string): Promise<Project | undefined> {
+  if (isDatabaseConfigured()) {
+    try {
+      const row = await prisma.project.findUnique({ where: { slug } });
+      if (row) return mapProject(row);
+    } catch {
+      /* fall through */
+    }
+  }
+  return staticProjects.find((p) => p.slug === slug);
 }
 
-export function getFeaturedProducts(): Product[] {
-  return products.filter((p) => p.featured && p.status === "available");
+export async function getProjectSlugs(): Promise<string[]> {
+  const all = await getProjects();
+  return all.map((p) => p.slug);
 }
 
-export function getProductBySlug(slug: string): Product | undefined {
-  return products.find((p) => p.slug === slug);
-}
+export const getServices = cache(async (): Promise<Service[]> => {
+  if (!isDatabaseConfigured()) return staticServices;
+  try {
+    const rows = await prisma.service.findMany({ orderBy: { sortOrder: "asc" } });
+    if (rows.length === 0) return staticServices;
+    return rows.map(mapService);
+  } catch {
+    return staticServices;
+  }
+});
 
-export function getProductSlugs(): string[] {
-  return products.map((p) => p.slug);
-}
-
-export function getProjects(): Project[] {
-  return projects;
-}
-
-export function getFeaturedProjects(): Project[] {
-  return projects.filter((p) => p.featured);
-}
-
-export function getProjectBySlug(slug: string): Project | undefined {
-  return projects.find((p) => p.slug === slug);
-}
-
-export function getProjectSlugs(): string[] {
-  return projects.map((p) => p.slug);
-}
-
-export function getServices(): Service[] {
-  return services;
-}
-
-export function getExperience(): ExperienceItem[] {
+export async function getExperience(): Promise<ExperienceItem[]> {
   return experience;
 }
 
-export function getCommissionProcess(): ProcessStep[] {
+export async function getCommissionProcess(): Promise<ProcessStep[]> {
   return commissionProcess;
 }
 
-export function getCommissionFaqs(): FaqItem[] {
+export async function getCommissionFaqs(): Promise<FaqItem[]> {
   return commissionFaqs;
 }
 
-export function getWorkingWithMe(): ProcessStep[] {
+export async function getWorkingWithMe(): Promise<ProcessStep[]> {
   return workingWithMe;
 }
 
-export function getLegalPages(): LegalPage[] {
+export async function getLegalPages(): Promise<LegalPage[]> {
   return legalPages;
 }
 
-export function getLegalPageBySlug(slug: string): LegalPage | undefined {
+export async function getLegalPageBySlug(slug: string): Promise<LegalPage | undefined> {
   return legalPages.find((p) => p.slug === slug);
 }
 
-export function getLegalSlugs(): string[] {
+export async function getLegalSlugs(): Promise<string[]> {
   return legalPages.map((p) => p.slug);
 }

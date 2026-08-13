@@ -4,8 +4,8 @@ import { SiteHeader } from "@/components/layout/site-header";
 import { Button } from "@/components/ui/button";
 import { getSite } from "@/lib/content";
 
-export default function NotFound() {
-  const site = getSite();
+export default async function NotFound() {
+  const site = await getSite();
 
   return (
     <>
@@ -23,14 +23,14 @@ export default function NotFound() {
             Page not found
           </h1>
           <p className="mt-4 max-w-md text-sm text-foreground-muted">
-            That route does not exist. Head back home or browse products.
+            That route does not exist. Head back home or browse selected work.
           </p>
           <div className="mt-8 flex gap-4">
             <Button asChild>
               <Link href="/">Home</Link>
             </Button>
             <Button asChild variant="secondary">
-              <Link href="/products">Products</Link>
+              <Link href="/work">Work</Link>
             </Button>
           </div>
         </div>

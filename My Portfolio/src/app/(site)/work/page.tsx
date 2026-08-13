@@ -10,15 +10,15 @@ export const metadata: Metadata = {
     "Selected projects by James Raphael Ibay — games, software, art, and client slices.",
 };
 
-export default function WorkPage() {
-  const projects = getProjects();
+export default async function WorkPage() {
+  const projects = await getProjects();
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-16 lg:px-8 lg:py-24">
       <SectionHeader
         eyebrow="My Portfolio"
         title="Selected work."
-        description="A mix of shipped products and client engagements. Each case focuses on what I owned and what was delivered."
+        description="A mix of personal releases and client engagements. Each case focuses on what I owned and what was delivered. Free downloads live on itch.io."
       />
       <div className="grid gap-12 md:grid-cols-2">
         {projects.map((project, i) => (

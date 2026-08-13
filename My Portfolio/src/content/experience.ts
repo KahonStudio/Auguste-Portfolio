@@ -7,7 +7,7 @@ export const experience: ExperienceItem[] = [
     role: "Developer & Artist",
     period: "2023 — Present",
     summary:
-      "I design, art, and ship games and software under my own name. Products are sold via itch.io. I take select commissions for studios and indie teams.",
+      "I design, art, and ship games and software under my own name. Free releases live on itch.io. I take select commissions for studios and indie teams.",
   },
   {
     id: "client-studios",

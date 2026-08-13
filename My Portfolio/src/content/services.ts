@@ -33,10 +33,10 @@ export const services: Service[] = [
     description:
       "I build desktop and workflow software for creators and developers — calm interfaces, practical features, and clear ownership.",
     deliverables: [
-      "Product requirements and interaction design",
+      "Requirements and interaction design",
       "Working software against agreed platforms",
       "Documentation for users and maintainers",
-      "Optional packaging for distribution (including itch.io)",
+      "Optional packaging for distribution (for example itch.io)",
     ],
     idealFor: "Teams that need custom tooling without enterprise bloat.",
   },

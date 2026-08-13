@@ -12,8 +12,8 @@ export const metadata: Metadata = {
     "Custom games, game art, software tools, and production support by James Raphael Ibay.",
 };
 
-export default function ServicesPage() {
-  const services = getServices();
+export default async function ServicesPage() {
+  const services = await getServices();
 
   return (
     <>
@@ -69,10 +69,10 @@ export default function ServicesPage() {
       </div>
 
       <CtaBand
-        title="Prefer a finished product?"
-        description="Browse games and software available now on itch.io."
-        primary={{ label: "View products", href: "/products" }}
-        secondary={{ label: "Contact", href: "/contact" }}
+        title="Want to try something I already shipped?"
+        description="Free games, tools, and art packs are on my itch.io page — separate from custom commissions."
+        primary={{ label: "Visit itch.io", href: "https://auguste.itch.io" }}
+        secondary={{ label: "View work", href: "/work" }}
       />
     </>
   );

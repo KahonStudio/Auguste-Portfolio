@@ -5,16 +5,18 @@ import { notFound } from "next/navigation";
 import { RevealImage } from "@/components/motion/reveal-image";
 import { Button } from "@/components/ui/button";
 import { getProjectBySlug, getProjectSlugs } from "@/lib/content";
+import { isVideoUrl } from "@/lib/utils";
 
 type Props = { params: Promise<{ slug: string }> };
 
 export async function generateStaticParams() {
-  return getProjectSlugs().map((slug) => ({ slug }));
+  const slugs = await getProjectSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const project = getProjectBySlug(slug);
+  const project = await getProjectBySlug(slug);
   if (!project) return { title: "Work" };
   return {
     title: project.title,
@@ -24,8 +26,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProjectDetailPage({ params }: Props) {
   const { slug } = await params;
-  const project = getProjectBySlug(slug);
+  const project = await getProjectBySlug(slug);
   if (!project) notFound();
+
+  const galleryVideos = project.images.filter(isVideoUrl);
+  const galleryImages = project.images.filter((src) => !isVideoUrl(src));
 
   return (
     <article className="mx-auto max-w-6xl px-6 py-16 lg:px-8 lg:py-24">
@@ -103,21 +108,39 @@ export default async function ProjectDetailPage({ params }: Props) {
       </div>
 
       {project.images.length > 0 ? (
-        <div className="mt-16 grid gap-6 md:grid-cols-2">
-          {project.images.map((src) => (
-            <RevealImage
+        <div className="mt-16 space-y-6">
+          {galleryVideos.map((src) => (
+            <div
               key={src}
-              className="relative aspect-[16/10] overflow-hidden border border-border bg-background-muted"
+              className="overflow-hidden border border-border bg-background-muted"
             >
-              <Image
+              <video
                 src={src}
-                alt=""
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 50vw"
+                className="aspect-video w-full object-cover"
+                controls
+                playsInline
+                preload="metadata"
               />
-            </RevealImage>
+            </div>
           ))}
+          {galleryImages.length > 0 ? (
+            <div className="grid gap-6 md:grid-cols-2">
+              {galleryImages.map((src) => (
+                <RevealImage
+                  key={src}
+                  className="relative aspect-[16/10] overflow-hidden border border-border bg-background-muted"
+                >
+                  <Image
+                    src={src}
+                    alt=""
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </RevealImage>
+              ))}
+            </div>
+          ) : null}
         </div>
       ) : null}
     </article>

@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+// SQLite for local/dev zero-config. For Vercel production, switch provider to
+// "postgresql" and set DATABASE_URL to a Neon/Supabase/Vercel Postgres URL.
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model SiteSettings {
+  id        String   @id @default("default")
+  data      String
+  updatedAt DateTime @updatedAt
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String
+  role        String
+  summary     String
+  description String
+  outcomes    String
+  images      String
+  coverImage  String
+  year        Int
+  tags        String
+  links       String
+  featured    Boolean  @default(false)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Service {
+  id           String   @id
+  title        String
+  description  String
+  deliverables String
+  idealFor     String
+  sortOrder    Int      @default(0)
+  updatedAt    DateTime @updatedAt
+}
+
+model MediaAsset {
+  id           String   @id @default(cuid())
+  publicId     String
+  url          String
+  resourceType String
+  format       String?
+  bytes        Int?
+  width        Int?
+  height       Int?
+  createdAt    DateTime @default(now())
+}

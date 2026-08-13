@@ -3,23 +3,21 @@ import { Hero } from "@/components/sections/hero";
 import { SectionHeader } from "@/components/sections/section-header";
 import { CtaBand } from "@/components/sections/cta-band";
 import { Timeline } from "@/components/sections/timeline";
-import { ProductCard } from "@/components/products/product-card";
 import { ProjectCard } from "@/components/work/project-card";
 import { FadeIn } from "@/components/motion/fade-in";
 import {
-  getFeaturedProducts,
   getFeaturedProjects,
   getServices,
   getSite,
   getWorkingWithMe,
 } from "@/lib/content";
 
-export default function HomePage() {
-  const site = getSite();
-  const featuredProducts = getFeaturedProducts().slice(0, 4);
-  const featuredProjects = getFeaturedProjects().slice(0, 3);
-  const services = getServices().slice(0, 3);
-  const workingWithMe = getWorkingWithMe();
+export default async function HomePage() {
+  const site = await getSite();
+  const featuredProjects = (await getFeaturedProjects()).slice(0, 3);
+  const services = (await getServices()).slice(0, 3);
+  const workingWithMe = await getWorkingWithMe();
+  const itchSocial = site.socials.find((s) => s.label === "itch.io");
 
   return (
     <>
@@ -31,43 +29,35 @@ export default function HomePage() {
         primaryCta={site.hero.primaryCta}
         secondaryCta={site.hero.secondaryCta}
         portraitImage={site.portraitImage}
+        backgroundVideoUrl={site.hero.backgroundVideoUrl}
+        reelYoutubeUrl={site.hero.reelYoutubeUrl}
       />
 
       <section className="mx-auto max-w-6xl px-6 py-24 lg:px-8 lg:py-28">
         <SectionHeader
-          eyebrow="My Products"
-          title="Games, software, and art you can buy."
-          description="Each product is built like a professional release — clear scope, usable delivery, sold on itch.io."
-          href="/products"
-          linkLabel="Browse all products"
+          eyebrow="My Portfolio"
+          title="Selected work."
+          description="Productions where I owned design, art, engineering — or a defined slice of client work."
+          href="/work"
+          linkLabel="View all work"
         />
-        <div className="grid gap-10 sm:grid-cols-2">
-          {featuredProducts.map((product, i) => (
-            <FadeIn key={product.slug} delay={i * 0.06}>
-              <ProductCard product={product} />
+        <div className="grid gap-12 lg:grid-cols-3">
+          {featuredProjects.map((project, i) => (
+            <FadeIn key={project.slug} delay={i * 0.06}>
+              <ProjectCard project={project} />
             </FadeIn>
           ))}
         </div>
       </section>
 
-      <section className="border-t border-border bg-background-elevated">
-        <div className="mx-auto max-w-6xl px-6 py-24 lg:px-8 lg:py-28">
-          <SectionHeader
-            eyebrow="My Portfolio"
-            title="Selected work."
-            description="Productions where I owned design, art, engineering — or a defined slice of client work."
-            href="/work"
-            linkLabel="View all work"
-          />
-          <div className="grid gap-12 lg:grid-cols-3">
-            {featuredProjects.map((project, i) => (
-              <FadeIn key={project.slug} delay={i * 0.06}>
-                <ProjectCard project={project} />
-              </FadeIn>
-            ))}
-          </div>
-        </div>
-      </section>
+      {itchSocial ? (
+        <CtaBand
+          title="Also on itch.io"
+          description="Free games, tools, and art packs you can download anytime — separate from commissions."
+          primary={{ label: "Visit itch.io", href: itchSocial.href }}
+          secondary={{ label: "Browse work", href: "/work" }}
+        />
+      ) : null}
 
       <section className="mx-auto max-w-6xl px-6 py-24 lg:px-8 lg:py-28">
         <SectionHeader

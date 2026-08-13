@@ -8,7 +8,7 @@ export const projects: Project[] = [
     summary:
       "End-to-end production of a compact action adventure: systems, art, and shipping.",
     description:
-      "I scoped Ember Reach as a finished short experience rather than an open-ended prototype. That meant locking pillars early, building art and systems in parallel, and cutting anything that threatened a clean release.\n\nThe result is a playable product with a coherent visual identity and a production process I now reuse for commissions and other titles.",
+      "I scoped Ember Reach as a finished short experience rather than an open-ended prototype. That meant locking pillars early, building art and systems in parallel, and cutting anything that threatened a clean release.\n\nThe result is a playable experience with a coherent visual identity and a production process I now reuse for commissions and other titles.",
     outcomes: [
       "Shipped a complete short campaign with original environments and UI",
       "Established a reusable art-to-engine pipeline for 2D production",
@@ -21,33 +21,27 @@ export const projects: Project[] = [
     coverImage: "/images/work/ember-reach-work.svg",
     year: 2025,
     tags: ["Game", "Unity", "Original Art"],
-    links: [
-      { label: "View product", href: "/products/ember-reach" },
-      { label: "itch.io", href: "https://auguste.itch.io" },
-    ],
+    links: [{ label: "Play free on itch.io", href: "https://auguste.itch.io" }],
     featured: true,
   },
   {
     slug: "signal-desk-tooling",
     title: "Signal Desk — Indie Production Tool",
-    role: "Product Designer & Engineer",
+    role: "Designer & Engineer",
     summary:
       "A desktop workspace for milestones, builds, and art queues without enterprise weight.",
     description:
-      "Signal Desk came from managing my own productions across notes apps and spreadsheets. I designed a calm interface for solo and small-team workflows, then implemented the core desk experience as a purchasable product.",
+      "Signal Desk came from managing my own productions across notes apps and spreadsheets. I designed a calm interface for solo and small-team workflows, then shipped the core desk experience as a free download.",
     outcomes: [
       "Shipped a focused productivity tool for game teams",
       "Reduced context-switching across task, build, and art notes",
-      "Validated demand through itch.io distribution",
+      "Distributed the tool through itch.io for easy access",
     ],
     images: ["/images/work/signal-desk-work-1.svg"],
     coverImage: "/images/work/signal-desk-work.svg",
     year: 2025,
     tags: ["Software", "Tooling", "UX"],
-    links: [
-      { label: "View product", href: "/products/signal-desk" },
-      { label: "itch.io", href: "https://auguste.itch.io" },
-    ],
+    links: [{ label: "Download on itch.io", href: "https://auguste.itch.io" }],
     featured: true,
   },
   {
@@ -79,7 +73,7 @@ export const projects: Project[] = [
     description:
       "Hollow Coast started as environment art for a personal project and became a packaged kit. I defined tile rules, prop density guidance, and lighting references so scenes stay cohesive when reused in other projects.",
     outcomes: [
-      "Published a royalty-free environment kit on itch.io",
+      "Published a free environment kit on itch.io",
       "Documented layering and lighting for consistent scene building",
       "Created a template for future asset pack releases",
     ],
@@ -87,7 +81,7 @@ export const projects: Project[] = [
     coverImage: "/images/work/hollow-coast-work.svg",
     year: 2024,
     tags: ["Asset Pack", "2D Art", "Pipeline"],
-    links: [{ label: "View product", href: "/products/hollow-coast-kit" }],
+    links: [{ label: "Download on itch.io", href: "https://auguste.itch.io" }],
     featured: false,
   },
 ];

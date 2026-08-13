@@ -8,11 +8,11 @@ export const legalPages: LegalPage[] = [
     sections: [
       {
         heading: "Agreement",
-        body: "By using this website, you agree to these terms. This site is operated by James Raphael Ibay as an individual. Content is provided for information, product discovery, and commission inquiries.",
+        body: "By using this website, you agree to these terms. This site is operated by James Raphael Ibay as an individual. Content is provided for information, portfolio showcase, and commission inquiries.",
       },
       {
-        heading: "Products",
-        body: "Digital products listed here are sold through itch.io or other linked storefronts. Purchases are subject to the storefront’s terms and the license notes provided for each product. I am not responsible for third-party platform outages or policy changes.",
+        heading: "Third-party downloads",
+        body: "Some projects link to free downloads on itch.io or other platforms. Those downloads are subject to the host platform’s terms. I am not responsible for third-party platform outages or policy changes.",
       },
       {
         heading: "Commissions",
@@ -20,11 +20,11 @@ export const legalPages: LegalPage[] = [
       },
       {
         heading: "Intellectual property",
-        body: "Unless otherwise stated, site design, writing, and original media on this website are owned by James Raphael Ibay. You may not reuse them without permission. Purchased product licenses are defined per product.",
+        body: "Unless otherwise stated, site design, writing, and original media on this website are owned by James Raphael Ibay. You may not reuse them without permission. Licenses for itch.io releases are defined on each itch.io page.",
       },
       {
         heading: "Limitation",
-        body: "This site is provided as-is. To the extent permitted by law, I am not liable for indirect or consequential damages arising from use of the site or linked storefronts.",
+        body: "This site is provided as-is. To the extent permitted by law, I am not liable for indirect or consequential damages arising from use of the site or linked third-party platforms.",
       },
     ],
   },
@@ -43,7 +43,7 @@ export const legalPages: LegalPage[] = [
       },
       {
         heading: "Third parties",
-        body: "Purchases on itch.io are handled by itch.io under their privacy policy. Email delivery providers (if configured) process message content solely to deliver mail.",
+        body: "Downloads and activity on itch.io are handled by itch.io under their privacy policy. Email delivery providers (if configured) process message content solely to deliver mail.",
       },
       {
         heading: "Contact",
@@ -57,8 +57,8 @@ export const legalPages: LegalPage[] = [
     updatedAt: "2026-07-20",
     sections: [
       {
-        heading: "Product licenses",
-        body: "Each product page includes a license note. Unless a product states otherwise, purchases grant you rights described on that product’s itch.io page. Source redistribution, resale of assets, or claiming authorship of my work is not permitted without a written agreement.",
+        heading: "itch.io releases",
+        body: "Free downloads on itch.io follow the license notes on each itch.io page. Source redistribution, resale of assets, or claiming authorship of my work is not permitted without a written agreement.",
       },
       {
         heading: "Commission licenses",
@@ -66,7 +66,7 @@ export const legalPages: LegalPage[] = [
       },
       {
         heading: "Site content",
-        body: "Screenshots and stills on this site illustrate my work. They are not a license to use those assets in your projects unless you purchase the related product or commission equivalent work.",
+        body: "Screenshots and stills on this site illustrate my work. They are not a license to use those assets in your projects unless you download a related release under its itch.io license or commission equivalent work.",
       },
     ],
   },

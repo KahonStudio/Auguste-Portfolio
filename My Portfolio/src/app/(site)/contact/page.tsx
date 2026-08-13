@@ -9,8 +9,8 @@ export const metadata: Metadata = {
   description: "Contact James Raphael Ibay for general inquiries.",
 };
 
-export default function ContactPage() {
-  const site = getSite();
+export default async function ContactPage() {
+  const site = await getSite();
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-16 lg:px-8 lg:py-24">

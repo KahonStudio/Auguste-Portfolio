@@ -1,16 +1,11 @@
 import type { MetadataRoute } from "next";
-import {
-  getLegalSlugs,
-  getProductSlugs,
-  getProjectSlugs,
-} from "@/lib/content";
+import { getLegalSlugs, getProjectSlugs } from "@/lib/content";
 
 const base = "https://jamesraphaelibay.com";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes = [
     "",
-    "/products",
     "/work",
     "/services",
     "/commissions",
@@ -23,26 +18,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: path === "" ? 1 : 0.8,
   }));
 
-  const products = getProductSlugs().map((slug) => ({
-    url: `${base}/products/${slug}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.7,
-  }));
-
-  const work = getProjectSlugs().map((slug) => ({
+  const projectSlugs = await getProjectSlugs();
+  const work = projectSlugs.map((slug) => ({
     url: `${base}/work/${slug}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.6,
   }));
 
-  const legal = getLegalSlugs().map((slug) => ({
+  const legalSlugs = await getLegalSlugs();
+  const legal = legalSlugs.map((slug) => ({
     url: `${base}/legal/${slug}`,
     lastModified: new Date(),
     changeFrequency: "yearly" as const,
     priority: 0.3,
   }));
 
-  return [...staticRoutes, ...products, ...work, ...legal];
+  return [...staticRoutes, ...work, ...legal];
 }

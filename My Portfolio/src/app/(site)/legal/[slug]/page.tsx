@@ -5,12 +5,13 @@ import { getLegalPageBySlug, getLegalSlugs } from "@/lib/content";
 type Props = { params: Promise<{ slug: string }> };
 
 export async function generateStaticParams() {
-  return getLegalSlugs().map((slug) => ({ slug }));
+  const slugs = await getLegalSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const page = getLegalPageBySlug(slug);
+  const page = await getLegalPageBySlug(slug);
   if (!page) return { title: "Legal" };
   return {
     title: page.title,
@@ -20,7 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function LegalPage({ params }: Props) {
   const { slug } = await params;
-  const page = getLegalPageBySlug(slug);
+  const page = await getLegalPageBySlug(slug);
   if (!page) notFound();
 
   return (

@@ -14,9 +14,9 @@ export const metadata: Metadata = {
     "Who Auguste (James Raphael Ibay) is — developer and artist building games and software.",
 };
 
-export default function AboutPage() {
-  const site = getSite();
-  const experience = getExperience();
+export default async function AboutPage() {
+  const site = await getSite();
+  const experience = await getExperience();
 
   return (
     <>
@@ -73,10 +73,10 @@ export default function AboutPage() {
             Why clients trust the process
           </h2>
           <p className="text-sm leading-relaxed text-foreground-muted">
-            I write scopes down. I show progress at milestones. I separate
-            product purchases (itch.io) from commission payment (agreed after
-            scope). Legal pages cover terms, privacy, and licenses so
-            expectations are visible before we start.
+            I write scopes down. I show progress at milestones. Free itch.io
+            downloads are separate from commission payment (agreed after scope).
+            Legal pages cover terms, privacy, and licenses so expectations are
+            visible before we start.
           </p>
           <p className="text-sm text-foreground-muted">
             Based: {site.location}. Reach me at{" "}

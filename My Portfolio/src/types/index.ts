@@ -1,25 +1,3 @@
-export type ProductKind = "game" | "software" | "asset-pack";
-export type ProductStatus = "available" | "coming-soon";
-
-export type Product = {
-  slug: string;
-  title: string;
-  kind: ProductKind;
-  tagline: string;
-  description: string;
-  longDescription: string;
-  priceLabel: string;
-  itchUrl: string;
-  coverImage: string;
-  gallery: string[];
-  tags: string[];
-  engine?: string;
-  platforms?: string[];
-  featured: boolean;
-  status: ProductStatus;
-  licenseNote?: string;
-};
-
 export type ProjectLink = {
   label: string;
   href: string;
@@ -88,7 +66,7 @@ export type LegalPage = {
 export type SiteContent = {
   brandName: string;
   shortName: string;
-  /** Online / storefront screen name (not a studio name). */
+  /** Online screen name (not a studio name). */
   screenName: string;
   tagline: string;
   description: string;
@@ -103,6 +81,10 @@ export type SiteContent = {
     primaryCta: { label: string; href: string };
     secondaryCta: { label: string; href: string };
     atmosphereImage: string;
+    /** Cloudinary .mp4 / .webm URL. Empty = still-image hero only. */
+    backgroundVideoUrl: string;
+    /** YouTube watch URL. Empty = hide Watch reel link. */
+    reelYoutubeUrl: string;
   };
   about: {
     headline: string;

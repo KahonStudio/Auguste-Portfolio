@@ -14,9 +14,9 @@ export const metadata: Metadata = {
     "How commissions work with James Raphael Ibay — process, payment posture, and inquiry form.",
 };
 
-export default function CommissionsPage() {
-  const process = getCommissionProcess();
-  const faqs = getCommissionFaqs();
+export default async function CommissionsPage() {
+  const process = await getCommissionProcess();
+  const faqs = await getCommissionFaqs();
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-16 lg:px-8 lg:py-24">

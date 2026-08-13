@@ -22,7 +22,7 @@ export function ContactForm() {
     formState: { errors },
   } = useForm<ContactInput>({
     resolver: zodResolver(contactSchema),
-    defaultValues: { type: "contact" },
+    defaultValues: { type: "contact", website: "" },
   });
 
   async function onSubmit(data: ContactInput) {
@@ -41,7 +41,7 @@ export function ContactForm() {
         throw new Error(body?.error ?? "Something went wrong.");
       }
       setStatus("success");
-      reset({ type: "contact" });
+      reset({ type: "contact", website: "" });
     } catch (err) {
       setStatus("error");
       setErrorMessage(
@@ -74,7 +74,26 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" noValidate>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="relative space-y-6"
+      noValidate
+    >
+      {/* Honeypot — leave empty; hidden from people, not from basic bots */}
+      <div
+        className="absolute -left-[9999px] h-0 w-0 overflow-hidden"
+        aria-hidden="true"
+      >
+        <label htmlFor="contact-website">Website</label>
+        <input
+          id="contact-website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          {...register("website")}
+        />
+      </div>
+
       <div className="grid gap-6 sm:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="contact-name">Name</Label>
