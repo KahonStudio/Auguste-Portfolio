@@ -2,11 +2,11 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// SQLite for local/dev zero-config. For Vercel production, switch provider to
-// "postgresql" and set DATABASE_URL to a Neon/Supabase/Vercel Postgres URL.
+// Neon Postgres (pooled DATABASE_URL for the app, DIRECT_URL for prisma db push).
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model SiteSettings {
