@@ -4,6 +4,8 @@ import { SiteHeader } from "@/components/layout/site-header";
 import { Button } from "@/components/ui/button";
 import { getSite } from "@/lib/content";
 
+export const dynamic = "force-dynamic";
+
 export default async function NotFound() {
   const site = await getSite();
 

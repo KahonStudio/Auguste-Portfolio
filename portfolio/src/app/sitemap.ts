@@ -1,6 +1,8 @@
 import type { MetadataRoute } from "next";
 import { getLegalSlugs, getProjectSlugs } from "@/lib/content";
 
+export const dynamic = "force-dynamic";
+
 const base = "https://jamesraphaelibay.com";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

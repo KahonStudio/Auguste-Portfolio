@@ -4,15 +4,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { RevealImage } from "@/components/motion/reveal-image";
 import { Button } from "@/components/ui/button";
-import { getProjectBySlug, getProjectSlugs } from "@/lib/content";
+import { getProjectBySlug } from "@/lib/content";
 import { isVideoUrl } from "@/lib/utils";
 
 type Props = { params: Promise<{ slug: string }> };
-
-export async function generateStaticParams() {
-  const slugs = await getProjectSlugs();
-  return slugs.map((slug) => ({ slug }));
-}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;

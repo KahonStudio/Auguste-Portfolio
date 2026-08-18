@@ -3,6 +3,8 @@ import { Instrument_Serif, Geist } from "next/font/google";
 import { getSite } from "@/lib/content";
 import "./globals.css";
 
+export const dynamic = "force-dynamic";
+
 const display = Instrument_Serif({
   variable: "--font-display",
   subsets: ["latin"],
