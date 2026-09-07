@@ -173,6 +173,8 @@ export function MediaGalleryField({
   const fileRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showUrl, setShowUrl] = useState(false);
+  const [pasteUrl, setPasteUrl] = useState("");
 
   async function onPick(files: FileList | null) {
     if (!files?.length) return;
@@ -194,6 +196,27 @@ export function MediaGalleryField({
 
   function removeAt(index: number) {
     onChange(value.filter((_, i) => i !== index));
+  }
+
+  function addFromUrl() {
+    const url = pasteUrl.trim();
+    if (!url) return;
+    try {
+      new URL(url);
+    } catch {
+      setError(
+        "Invalid URL. Use a full address like https://res.cloudinary.com/…/video.mp4",
+      );
+      return;
+    }
+    if (value.includes(url)) {
+      setError("That URL is already in the gallery.");
+      return;
+    }
+    setError(null);
+    onChange([...value, url]);
+    setPasteUrl("");
+    setShowUrl(false);
   }
 
   return (
@@ -239,7 +262,36 @@ export function MediaGalleryField({
         >
           {uploading ? "Uploading…" : "Add images or video"}
         </Button>
+        <Button
+          type="button"
+          size="sm"
+          variant="secondary"
+          onClick={() => {
+            setShowUrl((v) => !v);
+            setError(null);
+          }}
+        >
+          {showUrl ? "Hide URL" : "Paste URL"}
+        </Button>
       </div>
+      {showUrl ? (
+        <div className="flex flex-col gap-2 sm:flex-row">
+          <Input
+            value={pasteUrl}
+            placeholder="https://res.cloudinary.com/…/video.mp4"
+            onChange={(e) => setPasteUrl(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                addFromUrl();
+              }
+            }}
+          />
+          <Button type="button" size="sm" onClick={addFromUrl}>
+            Add URL
+          </Button>
+        </div>
+      ) : null}
       {hint ? <p className="text-xs text-foreground-subtle">{hint}</p> : null}
       {error ? <p className="text-sm text-danger">{error}</p> : null}
     </div>

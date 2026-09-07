@@ -144,11 +144,9 @@ export function ProjectEditor({ projectId, initial }: ProjectEditorProps) {
         setError(body?.error ?? "Save failed.");
         return;
       }
-      const saved = (await res.json()) as { id: string };
+      await res.json();
       setStatus("saved");
-      if (isNew) {
-        router.push(`/tagapangasiwa/projects/${saved.id}`);
-      }
+      router.push("/tagapangasiwa/projects");
       router.refresh();
     } catch {
       setStatus("error");
@@ -232,7 +230,7 @@ export function ProjectEditor({ projectId, initial }: ProjectEditorProps) {
         label="Gallery (images & video)"
         value={data.images}
         accept="image/*,video/*"
-        hint="Steam-style media strip: add screenshots and at least one trailer/video. Videos play on the public project page."
+        hint="Upload files or paste a Cloudinary URL (image or video). Videos play on the public project page."
         onChange={(images) => setData({ ...data, images })}
       />
 
