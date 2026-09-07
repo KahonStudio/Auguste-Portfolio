@@ -7,7 +7,7 @@ export const site: SiteContent = {
   tagline: "Games and software, built with intention.",
   description:
     "I design and build video games with original art, and software tools for developers and creators. Online I go by Auguste. Browse my work, download free releases on itch.io, or commission custom work.",
-  email: "itsmeibay@gmail.com",
+  email: "contact@imauguste.com",
   location: "Available remotely worldwide",
   nav: [
     { label: "Work", href: "/work" },
@@ -28,9 +28,7 @@ export const site: SiteContent = {
   ],
   socials: [
     { label: "itch.io", href: "https://auguste.itch.io" },
-    { label: "GitHub", href: "https://github.com" },
-    { label: "ArtStation", href: "https://www.artstation.com" },
-    { label: "LinkedIn", href: "https://www.linkedin.com" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/jamesibay/" },
   ],
   hero: {
     headline: "I create games and software with original craft.",
