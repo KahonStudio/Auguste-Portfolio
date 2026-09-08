@@ -22,10 +22,14 @@ export function SiteEditor({ initial }: SiteEditorProps) {
   async function save() {
     setStatus("saving");
     setError(null);
+    const payload = {
+      ...data,
+      socials: data.socials.filter((s) => s.label.trim() && s.href.trim()),
+    };
     const res = await fetch("/api/cms/site", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
+      body: JSON.stringify(payload),
     });
     if (!res.ok) {
       const body = (await res.json().catch(() => null)) as { error?: string } | null;
@@ -245,6 +249,69 @@ export function SiteEditor({ initial }: SiteEditorProps) {
             }
           />
         </Field>
+      </section>
+
+      <section className="space-y-4 border-t border-border pt-8">
+        <h2 className="font-display text-2xl text-foreground">Elsewhere (footer)</h2>
+        <p className="text-xs text-foreground-subtle">
+          Social links shown in the site footer. Remove a row to hide it.
+        </p>
+        <div className="space-y-3">
+          {data.socials.map((social, index) => (
+            <div
+              key={index}
+              className="grid gap-3 border border-border bg-background-elevated p-3 sm:grid-cols-[1fr_1.4fr_auto]"
+            >
+              <Input
+                placeholder="Label (e.g. LinkedIn)"
+                value={social.label}
+                onChange={(e) => {
+                  const socials = data.socials.map((s, i) =>
+                    i === index ? { ...s, label: e.target.value } : s,
+                  );
+                  setData({ ...data, socials });
+                }}
+              />
+              <Input
+                type="url"
+                placeholder="https://…"
+                value={social.href}
+                onChange={(e) => {
+                  const socials = data.socials.map((s, i) =>
+                    i === index ? { ...s, href: e.target.value } : s,
+                  );
+                  setData({ ...data, socials });
+                }}
+              />
+              <Button
+                type="button"
+                size="sm"
+                variant="secondary"
+                onClick={() =>
+                  setData({
+                    ...data,
+                    socials: data.socials.filter((_, i) => i !== index),
+                  })
+                }
+              >
+                Remove
+              </Button>
+            </div>
+          ))}
+        </div>
+        <Button
+          type="button"
+          size="sm"
+          variant="secondary"
+          onClick={() =>
+            setData({
+              ...data,
+              socials: [...data.socials, { label: "", href: "" }],
+            })
+          }
+        >
+          Add link
+        </Button>
       </section>
 
       <div className="flex flex-wrap items-center gap-4 border-t border-border pt-8">
