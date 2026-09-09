@@ -11,14 +11,17 @@ export default async function AdminHomePage() {
   const db = isDatabaseConfigured();
   let projectCount = 0;
   let serviceCount = 0;
+  let experienceCount = 0;
   let mediaCount = 0;
   if (db) {
     try {
-      [projectCount, serviceCount, mediaCount] = await Promise.all([
-        prisma.project.count(),
-        prisma.service.count(),
-        prisma.mediaAsset.count(),
-      ]);
+      [projectCount, serviceCount, experienceCount, mediaCount] =
+        await Promise.all([
+          prisma.project.count(),
+          prisma.service.count(),
+          prisma.experienceEntry.count(),
+          prisma.mediaAsset.count(),
+        ]);
     } catch {
       /* empty until migrate/seed */
     }
@@ -34,9 +37,10 @@ export default async function AdminHomePage() {
         </p>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <Stat label="Projects" value={String(projectCount)} />
         <Stat label="Services" value={String(serviceCount)} />
+        <Stat label="Experience" value={String(experienceCount)} />
         <Stat label="Media assets" value={String(mediaCount)} />
       </div>
 
@@ -72,6 +76,16 @@ export default async function AdminHomePage() {
             </Link>
           </li>
           <li>
+            <Link className="text-accent hover:text-accent-hover" href="/tagapangasiwa/experience">
+              Edit Experience timeline
+            </Link>
+          </li>
+          <li>
+            <Link className="text-accent hover:text-accent-hover" href="/tagapangasiwa/commissions">
+              Edit Commissions process & FAQs
+            </Link>
+          </li>
+          <li>
             <Link className="text-accent hover:text-accent-hover" href="/tagapangasiwa/media">
               Media library
             </Link>
@@ -85,12 +99,9 @@ export default async function AdminHomePage() {
       </div>
 
       <div className="space-y-3 border-t border-border pt-8">
-        <h2 className="font-display text-2xl text-foreground">Phase 3 TODO</h2>
+        <h2 className="font-display text-2xl text-foreground">Still TODO</h2>
         <ul className="list-disc space-y-1 pl-5 text-sm text-foreground-subtle">
-          <li>Experience timeline editor</li>
-          <li>Commission process / FAQs editor</li>
           <li>Legal pages editor</li>
-          <li>Nav / socials structured editor (partially via Site JSON today)</li>
         </ul>
       </div>
     </div>

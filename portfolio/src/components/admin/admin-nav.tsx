@@ -11,6 +11,8 @@ const links = [
   { href: "/tagapangasiwa/site", label: "Site & Hero" },
   { href: "/tagapangasiwa/projects", label: "Projects" },
   { href: "/tagapangasiwa/services", label: "Services" },
+  { href: "/tagapangasiwa/experience", label: "Experience" },
+  { href: "/tagapangasiwa/commissions", label: "Commissions" },
   { href: "/tagapangasiwa/media", label: "Media" },
 ];
 

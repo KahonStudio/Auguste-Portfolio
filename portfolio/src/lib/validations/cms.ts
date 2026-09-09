@@ -78,5 +78,36 @@ export const serviceInputSchema = z.object({
   sortOrder: z.coerce.number().int().optional(),
 });
 
+const slugId = z
+  .string()
+  .min(1)
+  .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Use lowercase id with hyphens.");
+
+export const experienceInputSchema = z.object({
+  id: slugId,
+  org: z.string().min(1),
+  role: z.string().min(1),
+  period: z.string().min(1),
+  summary: z.string().min(1),
+  sortOrder: z.coerce.number().int().optional(),
+});
+
+export const processStepInputSchema = z.object({
+  id: slugId,
+  title: z.string().min(1),
+  description: z.string().min(1),
+  sortOrder: z.coerce.number().int().optional(),
+});
+
+export const faqInputSchema = z.object({
+  id: slugId,
+  question: z.string().min(1),
+  answer: z.string().min(1),
+  sortOrder: z.coerce.number().int().optional(),
+});
+
 export type ProjectInput = z.infer<typeof projectInputSchema>;
 export type ServiceInput = z.infer<typeof serviceInputSchema>;
+export type ExperienceInput = z.infer<typeof experienceInputSchema>;
+export type ProcessStepInput = z.infer<typeof processStepInputSchema>;
+export type FaqInput = z.infer<typeof faqInputSchema>;

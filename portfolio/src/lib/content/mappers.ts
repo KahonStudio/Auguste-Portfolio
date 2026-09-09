@@ -1,5 +1,19 @@
-import type { Project, Service, SiteContent } from "@/types";
-import type { Project as DbProject, Service as DbService } from "@prisma/client";
+import type {
+  ExperienceItem,
+  FaqItem,
+  ProcessStep,
+  Project,
+  Service,
+  SiteContent,
+} from "@/types";
+import type {
+  CommissionFaq as DbFaq,
+  CommissionProcessStep as DbProcessStep,
+  ExperienceEntry as DbExperience,
+  Project as DbProject,
+  Service as DbService,
+  WorkingWithMeStep as DbWorkingStep,
+} from "@prisma/client";
 
 export function mapProject(row: DbProject): Project {
   return {
@@ -25,6 +39,34 @@ export function mapService(row: DbService): Service {
     description: row.description,
     deliverables: JSON.parse(row.deliverables) as string[],
     idealFor: row.idealFor,
+  };
+}
+
+export function mapExperience(row: DbExperience): ExperienceItem {
+  return {
+    id: row.id,
+    org: row.org,
+    role: row.role,
+    period: row.period,
+    summary: row.summary,
+  };
+}
+
+export function mapProcessStep(
+  row: DbProcessStep | DbWorkingStep,
+): ProcessStep {
+  return {
+    id: row.id,
+    title: row.title,
+    description: row.description,
+  };
+}
+
+export function mapFaq(row: DbFaq): FaqItem {
+  return {
+    id: row.id,
+    question: row.question,
+    answer: row.answer,
   };
 }
 

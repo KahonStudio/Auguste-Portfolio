@@ -1,7 +1,13 @@
 import { PrismaClient } from "@prisma/client";
-import { site } from "../src/content/site";
+import { experience } from "../src/content/experience";
+import {
+  commissionFaqs,
+  commissionProcess,
+  workingWithMe,
+} from "../src/content/process";
 import { projects } from "../src/content/projects";
 import { services } from "../src/content/services";
+import { site } from "../src/content/site";
 
 const prisma = new PrismaClient();
 
@@ -68,7 +74,81 @@ async function main() {
     });
   }
 
-  console.log("Seeded site settings, projects, and services.");
+  for (const [index, item] of experience.entries()) {
+    await prisma.experienceEntry.upsert({
+      where: { id: item.id },
+      create: {
+        id: item.id,
+        org: item.org,
+        role: item.role,
+        period: item.period,
+        summary: item.summary,
+        sortOrder: index,
+      },
+      update: {
+        org: item.org,
+        role: item.role,
+        period: item.period,
+        summary: item.summary,
+        sortOrder: index,
+      },
+    });
+  }
+
+  for (const [index, step] of commissionProcess.entries()) {
+    await prisma.commissionProcessStep.upsert({
+      where: { id: step.id },
+      create: {
+        id: step.id,
+        title: step.title,
+        description: step.description,
+        sortOrder: index,
+      },
+      update: {
+        title: step.title,
+        description: step.description,
+        sortOrder: index,
+      },
+    });
+  }
+
+  for (const [index, faq] of commissionFaqs.entries()) {
+    await prisma.commissionFaq.upsert({
+      where: { id: faq.id },
+      create: {
+        id: faq.id,
+        question: faq.question,
+        answer: faq.answer,
+        sortOrder: index,
+      },
+      update: {
+        question: faq.question,
+        answer: faq.answer,
+        sortOrder: index,
+      },
+    });
+  }
+
+  for (const [index, step] of workingWithMe.entries()) {
+    await prisma.workingWithMeStep.upsert({
+      where: { id: step.id },
+      create: {
+        id: step.id,
+        title: step.title,
+        description: step.description,
+        sortOrder: index,
+      },
+      update: {
+        title: step.title,
+        description: step.description,
+        sortOrder: index,
+      },
+    });
+  }
+
+  console.log(
+    "Seeded site, projects, services, experience, commission process/FAQs, working-with-me.",
+  );
 }
 
 main()

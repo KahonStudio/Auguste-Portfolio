@@ -4,14 +4,25 @@
  * static src/content/* so the public site keeps working without CMS setup.
  */
 import { cache } from "react";
-import { experience } from "@/content/experience";
+import { experience as staticExperience } from "@/content/experience";
 import { legalPages } from "@/content/legal";
-import { commissionFaqs, commissionProcess, workingWithMe } from "@/content/process";
+import {
+  commissionFaqs as staticFaqs,
+  commissionProcess as staticProcess,
+  workingWithMe as staticWorking,
+} from "@/content/process";
 import { projects as staticProjects } from "@/content/projects";
 import { services as staticServices } from "@/content/services";
 import { site as staticSite } from "@/content/site";
 import { isDatabaseConfigured, prisma } from "@/lib/prisma";
-import { mapProject, mapService, parseSiteData } from "@/lib/content/mappers";
+import {
+  mapExperience,
+  mapFaq,
+  mapProcessStep,
+  mapProject,
+  mapService,
+  parseSiteData,
+} from "@/lib/content/mappers";
 import type {
   ExperienceItem,
   FaqItem,
@@ -77,21 +88,57 @@ export const getServices = cache(async (): Promise<Service[]> => {
   }
 });
 
-export async function getExperience(): Promise<ExperienceItem[]> {
-  return experience;
-}
+export const getExperience = cache(async (): Promise<ExperienceItem[]> => {
+  if (!isDatabaseConfigured()) return staticExperience;
+  try {
+    const rows = await prisma.experienceEntry.findMany({
+      orderBy: { sortOrder: "asc" },
+    });
+    if (rows.length === 0) return staticExperience;
+    return rows.map(mapExperience);
+  } catch {
+    return staticExperience;
+  }
+});
 
-export async function getCommissionProcess(): Promise<ProcessStep[]> {
-  return commissionProcess;
-}
+export const getCommissionProcess = cache(async (): Promise<ProcessStep[]> => {
+  if (!isDatabaseConfigured()) return staticProcess;
+  try {
+    const rows = await prisma.commissionProcessStep.findMany({
+      orderBy: { sortOrder: "asc" },
+    });
+    if (rows.length === 0) return staticProcess;
+    return rows.map(mapProcessStep);
+  } catch {
+    return staticProcess;
+  }
+});
 
-export async function getCommissionFaqs(): Promise<FaqItem[]> {
-  return commissionFaqs;
-}
+export const getCommissionFaqs = cache(async (): Promise<FaqItem[]> => {
+  if (!isDatabaseConfigured()) return staticFaqs;
+  try {
+    const rows = await prisma.commissionFaq.findMany({
+      orderBy: { sortOrder: "asc" },
+    });
+    if (rows.length === 0) return staticFaqs;
+    return rows.map(mapFaq);
+  } catch {
+    return staticFaqs;
+  }
+});
 
-export async function getWorkingWithMe(): Promise<ProcessStep[]> {
-  return workingWithMe;
-}
+export const getWorkingWithMe = cache(async (): Promise<ProcessStep[]> => {
+  if (!isDatabaseConfigured()) return staticWorking;
+  try {
+    const rows = await prisma.workingWithMeStep.findMany({
+      orderBy: { sortOrder: "asc" },
+    });
+    if (rows.length === 0) return staticWorking;
+    return rows.map(mapProcessStep);
+  } catch {
+    return staticWorking;
+  }
+});
 
 export async function getLegalPages(): Promise<LegalPage[]> {
   return legalPages;

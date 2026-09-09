@@ -55,3 +55,37 @@ model MediaAsset {
   height       Int?
   createdAt    DateTime @default(now())
 }
+
+model ExperienceEntry {
+  id        String   @id
+  org       String
+  role      String
+  period    String
+  summary   String
+  sortOrder Int      @default(0)
+  updatedAt DateTime @updatedAt
+}
+
+model CommissionProcessStep {
+  id          String   @id
+  title       String
+  description String
+  sortOrder   Int      @default(0)
+  updatedAt   DateTime @updatedAt
+}
+
+model CommissionFaq {
+  id        String   @id
+  question  String
+  answer    String
+  sortOrder Int      @default(0)
+  updatedAt DateTime @updatedAt
+}
+
+model WorkingWithMeStep {
+  id          String   @id
+  title       String
+  description String
+  sortOrder   Int      @default(0)
+  updatedAt   DateTime @updatedAt
+}
